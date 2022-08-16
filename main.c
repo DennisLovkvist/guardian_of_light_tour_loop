@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "delo2d.h"
-#include <time.h>
+#include <sys/time.h>
 #include "game.h"
 
 
@@ -30,6 +30,8 @@ int init(GLFWwindow **window,float *projection)
     glEnable(GL_BLEND);
     glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE);
     glBlendEquation(GL_FUNC_ADD);
+
+    glfwSwapInterval(0);
     
     return 0;
 }
@@ -80,15 +82,18 @@ int main(void)
     load(&textures,&shaders);
     game_setup(&scene,&textures,screen_width,screen_height);    
     delo2d_input_init(&ki,&ki_prev);
-
-    clock_t initial_time = clock();      
+    
+    struct timeval t1, t2;
+    double elapsedTime;
 
     glViewport(0, 0, screen_width,screen_height);    
 
     while (!glfwWindowShouldClose(window))
     {        
         //t = (float)clock()/CLOCKS_PER_SEC;
-        t+= 0.016f;
+        t+= dt;
+
+        gettimeofday(&t1, NULL);
 
         delo2d_input_update(window,&ki,&ki_prev);
 
@@ -97,11 +102,15 @@ int main(void)
         game_update_logic(t,dt,&scene);
 
         game_render(t,&scene,&shaders,&textures,projection,screen_width,screen_height);
-
+        
         glfwSwapBuffers(window);
 
-        //dt = (float)clock()/CLOCKS_PER_SEC - t;   
-        dt = 0.016; 
+        gettimeofday(&t2, NULL);
+        
+        elapsedTime = (t2.tv_sec - t1.tv_sec) * 1000.0;// sec to ms
+        elapsedTime += (t2.tv_usec - t1.tv_usec) / 1000.0;// us to ms        
+
+        dt =  elapsedTime *= 0.001; 
 
         glfwPollEvents();
     }

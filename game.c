@@ -100,7 +100,8 @@ void setup_particles(Particle *particles)
         
         particles[i].vx = (float)(((rand() % (8 + 1 - 0)) + 0)-4)/10.0;
         particles[i].vy = -(float)((rand() % (10 + 1 - 0)) + 0)/10.0;
-        particles[i].lifetime = (rand() % (1800 + 1 - 0)) + 0;
+        particles[i].lifetime = 0;
+        particles[i].lifetime_total = (rand() % (4 + 1 - 0)) + 0;
         particles[i].speed = 0;
 
     }
@@ -170,7 +171,7 @@ int game_setup(Scene *scene,Texture *sprite_sheets,unsigned int screen_width,uns
     float default_scale_x = 1,default_scale_y = 1;
     float default_skew_x = 0,default_skew_y = 0;
     
-    delo2d_sprite_define(&sprites_scene_above_water[0], 1000,250,256,256,2110,776,256,256,1,ss_width,ss_height,4,8,0.2,color_white,2,2,default_skew_x,default_skew_y,0,0);//Sun
+    delo2d_sprite_define(&sprites_scene_above_water[0], 1000,250,256,256,2110,776,256,256,1,ss_width,ss_height,4,8,1,color_white,2,2,default_skew_x,default_skew_y,0,0);//Sun
     delo2d_sprite_define(&sprites_scene_above_water[1], 0,540,3680,918,0,3082,3680,918,1,ss_width,ss_height,1,1,0,palette[2],1.1f,default_scale_y,default_skew_x,default_skew_y,0,0);//Ground
     delo2d_sprite_define(&sprites_scene_above_water[2], 0,242,406,86,1624,2130,406,86,1,ss_width,ss_height,1,1,0,palette[7],default_scale_x,default_scale_y,default_skew_x,default_skew_y,0,0);//Cloud
     delo2d_sprite_define(&sprites_scene_above_water[3], 600,212,238,146,1386,2130,238,146,1,ss_width,ss_height,1,1,0,palette[7],default_scale_x,default_scale_y,default_skew_x,default_skew_y,0,0);//Cloud
@@ -238,12 +239,12 @@ int game_setup(Scene *scene,Texture *sprite_sheets,unsigned int screen_width,uns
     delo2d_sprite_define(&sprites_scene_above_water[65], 910,562,76,92,1356,298,76,92,1,ss_width,ss_height,1,1,0,palette[7],default_scale_x,default_scale_y,default_skew_x,default_skew_y,0,0);//Dave
     delo2d_sprite_define(&sprites_scene_above_water[66], 738,772,486,128,1434,504,486,128,1,ss_width,ss_height,1,1,0,palette[1],default_scale_x,default_scale_y,default_skew_x,default_skew_y,0,0);//Bonfire shadow
     delo2d_sprite_define(&sprites_scene_above_water[67], 792,682,250,236,1182,418,250,236,1,ss_width,ss_height,1,1,0,palette[6],default_scale_x,default_scale_y,default_skew_x,default_skew_y,0,0);//Bonfire back
-    delo2d_sprite_define(&sprites_scene_above_water[68], 758,338,400,770,0,0,400,770,0,sprite_sheets[0].width,sprite_sheets[0].height,16,56,0.8,palette[7],1.25f,1.25f,default_skew_x,default_skew_y,0,0);//Fire 
+    delo2d_sprite_define(&sprites_scene_above_water[68], 758,338,400,770,0,0,400,770,0,sprite_sheets[0].width,sprite_sheets[0].height,16,56,4,palette[7],1.25f,1.25f,default_skew_x,default_skew_y,0,0);//Fire 
     delo2d_sprite_define(&sprites_scene_above_water[69], 738,726,486,208,1434,298,486,208,1,ss_width,ss_height,1,1,0,palette[6],default_scale_x,default_scale_y,default_skew_x,default_skew_y,0,0);//Bonfire front 
-    delo2d_sprite_define(&sprites_scene_above_water[70], 754,430,400,770,0,0,400,770,0,sprite_sheets[0].width,sprite_sheets[0].height,16,56,0.8,palette[7],0.75f,0.75f,default_skew_x,default_skew_y,0,0);//Fire 
-    delo2d_sprite_define(&sprites_scene_above_water[71], 660,900,944,212,0,4000,944,212,1,ss_width,ss_height,7,28,0.3,palette[6],default_scale_x,default_scale_y,default_skew_x,default_skew_y,0,0);//Fish
-    delo2d_sprite_define(&sprites_scene_above_water[72], 660,900,944,212,0,4848,944,212,1,ss_width,ss_height,7,28,0.3,color_white,default_scale_x,default_scale_y,default_skew_x,default_skew_y,0,0);//Fish distortion
-    delo2d_sprite_define(&sprites_scene_above_water[73], 660,660,166,172,1917,0,166,172,1,ss_width,ss_height,10,23,0.07,palette[7],default_scale_x,default_scale_y,default_skew_x,default_skew_y,0,0);//Raven
+    delo2d_sprite_define(&sprites_scene_above_water[70], 754,430,400,770,0,0,400,770,0,sprite_sheets[0].width,sprite_sheets[0].height,16,56,4,palette[7],0.75f,0.75f,default_skew_x,default_skew_y,0,0);//Fire 
+    delo2d_sprite_define(&sprites_scene_above_water[71], -500,-500,944,212,0,4000,944,212,1,ss_width,ss_height,7,28,2,palette[6],default_scale_x,default_scale_y,default_skew_x,default_skew_y,0,0);//Fish
+    delo2d_sprite_define(&sprites_scene_above_water[72], -500,-500,944,212,0,4848,944,212,1,ss_width,ss_height,7,28,2,color_white,default_scale_x,default_scale_y,default_skew_x,default_skew_y,0,0);//Fish distortion
+    delo2d_sprite_define(&sprites_scene_above_water[73], -500,-500,166,172,1917,0,166,172,1,ss_width,ss_height,10,23,0.5f,palette[7],default_scale_x,default_scale_y,default_skew_x,default_skew_y,0,0);//Raven
     delo2d_sprite_define(&sprites_scene_above_water[74], -240,-469,438,1092,3244,1990,438,1092,1,ss_width,ss_height,1,1,0,palette[0],default_scale_x,default_scale_y,default_skew_x,default_skew_y,1,0);//Tree
     delo2d_sprite_define(&sprites_scene_above_water[75], 1610,-500,438,1092,3244,1990,438,1092,1,ss_width,ss_height,1,1,0,palette[0],default_scale_x,default_scale_y,default_skew_x,default_skew_y,0,0);//Tree
    
@@ -252,7 +253,7 @@ int game_setup(Scene *scene,Texture *sprite_sheets,unsigned int screen_width,uns
     delo2d_sprite_define(&sprite_distortion_map_water, 0,0,screen_width,screen_height,0,0,screen_width,screen_height,1,screen_width,screen_height,1,1,0,color_white,default_scale_x,default_scale_y,default_skew_x,default_skew_y,0,0); 
     delo2d_sprite_define(&sprite_distortion_map_mask_shoreline, 80,530,3680,918,0,3082,3680,918,1,ss_width,ss_height,1,1,0,palette[2],1.1,default_scale_y,default_skew_x,default_skew_y,0,0);
     delo2d_sprite_define(&sprite_distortion_map_mask_land, 0,0,screen_width,590,1300,3400,10,10,1,ss_width,ss_height,1,1,0,color_black,default_scale_x,default_scale_y,default_skew_x,default_skew_y,0,0);
-    delo2d_sprite_define(&sprite_distortion_map_fire,820,270,400,770,0,0,400,770,2,sprite_sheets[2].width,sprite_sheets[2].height,16,56,0.8,color_white,default_scale_x,default_scale_y,default_skew_x,default_skew_y,0,0);
+    delo2d_sprite_define(&sprite_distortion_map_fire,820,270,400,770,0,0,400,770,2,sprite_sheets[2].width,sprite_sheets[2].height,16,56,4,color_white,default_scale_x,default_scale_y,default_skew_x,default_skew_y,0,0);
     delo2d_sprite_define(&sprite_rt_scene_land_and_water, 0,0,screen_width,screen_height,0,0,screen_width,screen_height,1,screen_width,screen_height,1.1,1,0,color_white,default_scale_x,default_scale_y,default_skew_x,default_skew_y,0,1);    
     delo2d_sprite_define(&sprite_particle, 0,0,3,3,1300,3400,5,5,1,ss_width,ss_height,1,1,0,color_white,default_scale_x,default_scale_y,default_skew_x,default_skew_y,0,0);     
     delo2d_sprite_define(&sprite_sky, 0,0,screen_width*2,500,0,0,screen_width,screen_height,1,ss_width,ss_height,1,1,0,color_white,default_scale_x,default_scale_y,default_skew_x,default_skew_y,0,0);
@@ -285,18 +286,18 @@ int game_setup(Scene *scene,Texture *sprite_sheets,unsigned int screen_width,uns
     setup_clouds(&scene->clouds);
 
     scene->fish.active = 0;
-    scene->fish.spawn_delay = 2;
+    scene->fish.spawn_delay = 0;
     scene->fish.sprite_index = 71;
     
     scene->raven.active = 0;
-    scene->raven.spawn_delay = 4;
+    scene->raven.spawn_delay = 0;
     scene->raven.sprite_index = 73;
     scene->raven.speed_x = 0;
 
 
     sprites_scene_above_water[scene->fish.sprite_index].loop = 0;
     sprites_scene_above_water[scene->fish.sprite_index].offset.x = 0;
-    sprites_scene_above_water[scene->fish.sprite_index].offset.y = 4000;
+    sprites_scene_above_water[scene->fish.sprite_index].offset.y = 4000;    
 
     sprites_scene_above_water[scene->fish.sprite_index+1].loop = 0;
     sprites_scene_above_water[scene->fish.sprite_index+1].offset.x = 0;
@@ -333,9 +334,9 @@ void game_update_controls(KeyboardInput *ki,KeyboardInput *ki_prev, Projection p
         sprite_distortion_map_mask_shoreline.position.x++;
     }
 } 
-void update_dog(Dog *dog,Sprite *sprites)
+void update_dog(Dog *dog,Sprite *sprites,float dt)
 {
-    dog->scale_y += (dog->flag_y) ? 0.0002f:-0.0005f;
+    dog->scale_y += dog->flag_y ? 0.02f*dt:-0.05f*dt;
     if(dog->scale_y < dog->min_scale_y)
     {
         dog->scale_y = dog->min_scale_y;
@@ -349,11 +350,11 @@ void update_dog(Dog *dog,Sprite *sprites)
     int index = dog->sprite_index;
     sprites[index].scale.y = dog->scale_y;
 }
-void update_tall_grass(TallGrass *tall_grass,Sprite *sprites)
+void update_tall_grass(TallGrass *tall_grass,Sprite *sprites,float dt)
 {
     for (int i = 0; i < COUNT_TALL_GRASS; i++)  
     {          
-        tall_grass[i].sway += (tall_grass[i].flag) ? 0.0001f:-0.0001f;
+        tall_grass[i].sway += (tall_grass[i].flag) ? 0.02f*dt:-0.02f*dt;
 
         if(tall_grass[i].sway < tall_grass[i].min_sway)
         {
@@ -371,15 +372,15 @@ void update_tall_grass(TallGrass *tall_grass,Sprite *sprites)
         sprites[index].orientation = tall_grass[i].sway*tall_grass[i].speed;
     }
 }
-void update_clouds(Cloud *clouds,Sprite *sprites)
+void update_clouds(Cloud *clouds,Sprite *sprites,float dt)
 {
     for (int i = 0; i < COUNT_CLOUDS; i++)
     {          
-        float rnd_x = (rand()%((100+1)-1) + 1)/200000.0;
-        float rnd_y = (rand()%((100+1)-1) + 1)/200000.0;
+        float rnd_x = (rand()%((100+1)-1) + 1)/2000.0;
+        float rnd_y = (rand()%((100+1)-1) + 1)/2000.0;
 
-        clouds[i].scale_x += ((clouds[i].flag_x) ? rnd_x:-rnd_x);
-        clouds[i].scale_y += ((clouds[i].flag_y) ? rnd_y:-rnd_y);
+        clouds[i].scale_x += ((clouds[i].flag_x) ? rnd_x*dt:-rnd_x*dt);
+        clouds[i].scale_y += ((clouds[i].flag_y) ? rnd_y*dt:-rnd_y*dt);
 
         if(clouds[i].scale_x < clouds[i].min_scale_x)
         {
@@ -408,7 +409,7 @@ void update_clouds(Cloud *clouds,Sprite *sprites)
         sprites[index].scale.x = clouds[i].scale_x*clouds[i].speed;
         sprites[index].scale.y = clouds[i].scale_y*clouds[i].speed;
 
-        sprites[index].position.x += 0.1f;
+        sprites[index].position.x += 10.0*dt;
 
         if(sprites[index].position.x > 2000)
         {
@@ -416,15 +417,15 @@ void update_clouds(Cloud *clouds,Sprite *sprites)
         }
     } 
 }
-void update_shadows(Shadow *shadows,Sprite *sprites)
+void update_shadows(Shadow *shadows,Sprite *sprites,float dt)
 {
     for (int i = 0; i < COUNT_SHADOWS; i++)
     {          
-        float rnd_x = (rand()%((100+1)-1) + 1)/10000.0;
-        float rnd_y = (rand()%((100+1)-1) + 1)/10000.0;
+        float rnd_x = (rand()%((100+1)-1) + 1)/100.0;
+        float rnd_y = (rand()%((100+1)-1) + 1)/100.0;
 
-        shadows[i].scale_x += ((shadows[i].flag_x) ? rnd_x:-rnd_x);
-        shadows[i].scale_y += ((shadows[i].flag_y) ? rnd_y:-rnd_y);
+        shadows[i].scale_x += ((shadows[i].flag_x) ? rnd_x:-rnd_x)*dt;
+        shadows[i].scale_y += ((shadows[i].flag_y) ? rnd_y:-rnd_y)*dt;
 
         if(shadows[i].scale_x < shadows[i].min_scale_x)
         {
@@ -455,23 +456,24 @@ void update_particles(float t,float dt, Particle *particles,Sprite *sprite)
     for (size_t i = 0; i < COUNT_PARTICLES; i++)
     {        
         particles[i].lifetime += dt;
-        if(particles[i].lifetime > 1800)
+        if(particles[i].lifetime > particles[i].lifetime_total)
         {
             particles[i].x = (rand() % (850 + 1 - 800)) + 800;
             particles[i].y = (rand() % (700 + 1 - 500)) + 500;
             particles[i].x_prev = particles[i].x;
             particles[i].y_prev = particles[i].y;
-            particles[i].vx = (float)(((rand() % (8 + 1 - 0)) + 0)-4)/100.0;
-            particles[i].vy = -(float)((rand() % (10 + 1 - 0)) + 0)/100.0;
-            particles[i].lifetime  = 0;
+            particles[i].vx = (float)(((rand() % (200 + 1 - 0)) + 0)-100);
+            particles[i].vy = -(float)((rand() % (300 + 1 - 50)) + 50);            
+            particles[i].lifetime = 0;
+            particles[i].lifetime_total = (rand() % (4 + 1 - 0)) + 0;
         }
         else
         {
             particles[i].vx-=((float)((rand() % (10 + 1 - 0)) + 0)-5)/50.0;
             particles[i].vy-=((float)((rand() % (10 + 1 - 0)) + 0)-4.5)/50.0;
 
-            particles[i].x += particles[i].vx;
-            particles[i].y += particles[i].vy;           
+            particles[i].x += particles[i].vx*dt;
+            particles[i].y += particles[i].vy*dt;           
         }        
 
         float dx = particles[i].x_prev - particles[i].x;
@@ -483,11 +485,11 @@ void update_particles(float t,float dt, Particle *particles,Sprite *sprite)
     }
     
 }
-void update_trees(Tree *trees,Sprite *sprites)
+void update_trees(Tree *trees,Sprite *sprites,float dt)
 {
     for (int i = 0; i < COUNT_TREES; i++)
     {          
-        trees[i].sway += (trees[i].flag) ? 0.005f:-0.005f;
+        trees[i].sway += (trees[i].flag) ? 0.5f*dt:-0.5f*dt;
 
         if(trees[i].sway < trees[i].min_sway)
         {
@@ -507,12 +509,12 @@ void update_trees(Tree *trees,Sprite *sprites)
 }
 void game_update_logic(float t,float dt,Scene *scene)
 {
-    update_dog(&scene->dog,sprites_scene_above_water);
-    update_tall_grass(&scene->tall_grass,sprites_scene_above_water);
-    update_shadows(&scene->shadows,sprites_scene_above_water);
-    update_trees(&scene->trees,sprites_scene_above_water);
+    update_dog(&scene->dog,sprites_scene_above_water,dt);
+    update_tall_grass(&scene->tall_grass,sprites_scene_above_water,dt);
+    update_shadows(&scene->shadows,sprites_scene_above_water,dt);
+    update_trees(&scene->trees,sprites_scene_above_water,dt);
     update_particles(t,dt,&scene->particles,&sprite_particle);     
-    update_clouds(&scene->clouds,sprites_scene_above_water);
+    update_clouds(&scene->clouds,sprites_scene_above_water,dt);
 
     delo2d_sprite_animate(&sprites_scene_above_water[0],dt);
     delo2d_sprite_animate(&sprites_scene_above_water[68],dt);
@@ -529,14 +531,17 @@ void game_update_logic(float t,float dt,Scene *scene)
     }
     if(scene->fish.active == 0)
     {
-        scene->fish.spawn_delay -= 0.016f;
+        scene->fish.spawn_delay -= dt;
 
         if(scene->fish.spawn_delay <= 0)
         {
             scene->fish.active = 1; 
             sprites_scene_above_water[scene->fish.sprite_index].position.x = sprites_scene_above_water[scene->fish.sprite_index+1].position.x = (rand() % (1920 + 1 - 0)) + 0;
-            scene->fish.spawn_delay = (rand() % (38 + 1 - 18)) + 18;
+            sprites_scene_above_water[scene->fish.sprite_index].position.y = sprites_scene_above_water[scene->fish.sprite_index+1].position.y = (rand() % (1000 + 1 - 950)) + 950;
+            scene->fish.spawn_delay = (rand() % (15 + 1 - 8)) + 8;
             sprites_scene_above_water[scene->fish.sprite_index].time = sprites_scene_above_water[scene->fish.sprite_index+1].time = 0;
+            delo2d_sprite_animate(&sprites_scene_above_water[scene->fish.sprite_index],dt);
+            delo2d_sprite_animate(&sprites_scene_above_water[scene->fish.sprite_index+1],dt);
 
             int n = ((rand() % (10 + 1 - 0)) + 0);
             if(n > 5)
@@ -570,15 +575,15 @@ void game_update_logic(float t,float dt,Scene *scene)
 
         if(reset)
         {
-            scene->raven.spawn_delay = (rand() % (38 + 1 - 18)) + 18;
+            scene->raven.spawn_delay = (rand() % (15 + 1 - 8)) + 8;
             scene->raven.active = 0;
         }
-        sprites_scene_above_water[scene->raven.sprite_index].position.x += scene->raven.speed_x;
-        sprites_scene_above_water[scene->raven.sprite_index].position.y += scene->raven.speed_y;
+        sprites_scene_above_water[scene->raven.sprite_index].position.x += scene->raven.speed_x*dt;
+        sprites_scene_above_water[scene->raven.sprite_index].position.y += scene->raven.speed_y*dt;
     }
     else
     {
-        scene->raven.spawn_delay -= 0.016f;
+        scene->raven.spawn_delay -= dt;
 
         if(scene->raven.spawn_delay <= 0)
         {
@@ -588,32 +593,23 @@ void game_update_logic(float t,float dt,Scene *scene)
             {
                 sprites_scene_above_water[scene->raven.sprite_index].position.x = 1960;
                 sprites_scene_above_water[scene->raven.sprite_index].flip_horizontally = 0;
-                scene->raven.speed_x = -3;
+                scene->raven.speed_x = -300;
             }
             else
             {
                 sprites_scene_above_water[scene->raven.sprite_index].position.x = -40;
                 sprites_scene_above_water[scene->raven.sprite_index].flip_horizontally = 1;
-                scene->raven.speed_x = 3;
+                scene->raven.speed_x = 300;
             }
             scene->raven.speed_y = 0;
 
-            sprites_scene_above_water[scene->raven.sprite_index].position.y = (rand() % (500 + 1 - 50)) + 50;
+            sprites_scene_above_water[scene->raven.sprite_index].position.y = (rand() % (400 + 1 - 50)) + 50;
 
 
             sprites_scene_above_water[scene->raven.sprite_index].time = 0;
         }
 
     }
-
-
-    
-        
-    
-
-
-
-
 
     delo2d_sprite_animate(&sprite_distortion_map_fire,dt);
 }
@@ -661,22 +657,29 @@ void game_render(float t,Scene *scene, unsigned int *shaders,Texture *sprite_she
     {
         sprite_particle.position.x = scene->particles[i].x;
         sprite_particle.position.y = scene->particles[i].y;
-        sprite_particle.skew.x = scene->particles[i].speed*2;
+        sprite_particle.skew.x = scene->particles[i].speed;
         sprite_particle.color.r = 1.0;
-        sprite_particle.color.g = 0.90;
-        sprite_particle.color.b = 0.3;
-        sprite_particle.color.a = 1-(scene->particles[i].lifetime / 1800.0);
-        sprite_particle.scale.x = sprite_particle.scale.y = 1-(scene->particles[i].lifetime / 1800.0);
+        sprite_particle.color.g = 0.7;
+        sprite_particle.color.b = 0.0;
+        sprite_particle.color.a = 1-(scene->particles[i].lifetime / scene->particles[i].lifetime_total);
+        sprite_particle.scale.x = sprite_particle.scale.y = 1-(scene->particles[i].lifetime / scene->particles[i].lifetime_total);
 
         if(sprite_particle.scale.x < 0)
         {
             sprite_particle.scale.x = sprite_particle.scale.y = 0;
         }
-        sprite_particle.orientation = atan2(scene->particles[i].vy,scene->particles[i].vx);
+        sprite_particle.orientation = atan2(scene->particles[i].vy,scene->particles[i].vx)+(3.14/2);
 
         sprite_particle.scale.x = 1;
         sprite_particle.scale.y = 1;
         delo2d_sprite_batch_add(&sb,&sprite_particle, &sprite_sheets[1]);
+
+        sprite_particle.color.r = 1;
+        sprite_particle.color.g = 1;
+        sprite_particle.color.b = 1;
+        sprite_particle.scale.x*=0.5;
+        sprite_particle.scale.y*=0.5;
+         delo2d_sprite_batch_add(&sb,&sprite_particle, &sprite_sheets[1]);
     }
     delo2d_sprite_batch_end(&sb);
 

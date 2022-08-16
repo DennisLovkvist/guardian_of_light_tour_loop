@@ -4,7 +4,7 @@
 #define COUNT_SHADOWS 5
 #define COUNT_CLOUDS 3
 #define COUNT_TALL_GRASS 18
-#define COUNT_PARTICLES 40
+#define COUNT_PARTICLES 20
 
 typedef struct Tree Tree;
 struct Tree
@@ -65,7 +65,7 @@ struct Raven
 typedef struct Particle Particle;
 struct Particle
 {
-    float x,y,x_prev,y_prev,vx,vy,lifetime,speed;
+    float x,y,x_prev,y_prev,vx,vy,lifetime,lifetime_total,speed;
 };
 
 typedef struct Scene Scene;
@@ -87,12 +87,12 @@ void setup_clouds(Cloud *clouds);
 void setup_shadows(Shadow *shadows);
 void setup_particles(Particle *particles);
 void setup_trees(Tree *trees);
-void update_dog(Dog *dog,Sprite *sprites);
-void update_tall_grass(TallGrass *tall_grass,Sprite *sprites);
-void update_clouds(Cloud *clouds,Sprite *sprites);
-void update_shadows(Shadow *shadows,Sprite *sprites);
+void update_dog(Dog *dog,Sprite *sprites,float dt);
+void update_tall_grass(TallGrass *tall_grass,Sprite *sprites,float dt);
+void update_clouds(Cloud *clouds,Sprite *sprites,float dt);
+void update_shadows(Shadow *shadows,Sprite *sprites,float dt);
 void update_particles(float t,float dt, Particle *particles,Sprite *sprite);
-void update_trees(Tree *trees,Sprite *sprites);
+void update_trees(Tree *trees,Sprite *sprites,float dt);
 
 int game_setup(Scene *scene,Texture *sprite_sheets,unsigned int screen_width,unsigned int screen_height);
 void game_update_controls(KeyboardInput *ki,KeyboardInput *ki_prev, Projection projection);
